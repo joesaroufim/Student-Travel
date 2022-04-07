@@ -13,4 +13,10 @@ $query->bind_result($id);
 $query->fetch();
 $_SESSION['id'] = $ID;
 
+if ($query->num_rows == 1){
+    echo("true");
+}else{
+    echo("false");
+}
+
 ?>
