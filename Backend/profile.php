@@ -10,9 +10,10 @@ $college = $_POST['college'];
 $major = $_POST['major'];
 $date = $_POST['date'];
 $status = $_POST['status'];
+$phone = $_POST['phone'];
 $id = $_SESSION['id'];
 
-$user_update = ("UPDATE users name = $name, gender = $gender, country = $country WHERE user_id = $id");
+$user_update = ("UPDATE users name = $name, gender = $gender, country = $country, phone_number = $phone WHERE user_id = $id");
 
 $query = $mysqli->prepare("SELECT travel_id FROM travels WHERE  user_id = ?");
 $query->bind_param('i', $id);
