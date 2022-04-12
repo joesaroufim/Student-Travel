@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         user_error.setVisibility(View.GONE);
         pass_error.setVisibility(View.GONE);
+        cred_error.setVisibility(View.GONE);
 
 
     }
@@ -45,5 +46,10 @@ public class MainActivity extends AppCompatActivity {
             Intent home = new Intent(getApplicationContext(), Home.class);
             startActivity(home);
         }
+    }
+
+    public void signup (View view){
+        Intent signup = new Intent (getApplicationContext(), Signup.class);
+        startActivity(signup);
     }
 }

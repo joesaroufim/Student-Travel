@@ -36,6 +36,7 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textPersonName"
+            android:password="true"
             android:textAlignment="center" />
     </androidx.cardview.widget.CardView>
 
