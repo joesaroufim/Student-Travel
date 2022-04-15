@@ -2,9 +2,11 @@ package com.lau.student_travel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -175,8 +177,14 @@ public class Home extends AppCompatActivity {
         row.addView(col3);
         table.addView(row);
 
-
     }
+
+    public void home (View view){
+        Intent home = new Intent(getApplicationContext(), Profile.class);
+        startActivity(home);
+    }
+
+
 
 
 }
