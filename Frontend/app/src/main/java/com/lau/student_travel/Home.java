@@ -179,9 +179,9 @@ public class Home extends AppCompatActivity {
 
     }
 
-    public void home (View view){
-        Intent home = new Intent(getApplicationContext(), Profile.class);
-        startActivity(home);
+    public void profile (View view){
+        Intent profile = new Intent(getApplicationContext(), Profile.class);
+        startActivity(profile);
     }
 
 
