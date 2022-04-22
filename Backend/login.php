@@ -2,18 +2,18 @@
 
 include ("db_info.php");
 
-$email = $_POST['email'];
+$username = $_POST['username'];
 $password = hash("sha256",$mysqli->real_escape_string($_POST['password']));
 
-$query = $mysqli->prepare("SELECT user_id FROM users WHERE email = ? AND password = ? ");
-$query->bind_param('ss', $email, $password);
+$query = $mysqli->prepare("SELECT user_id FROM users WHERE username = ? AND password = ? ");
+$query->bind_param('ss', $username, $password);
 $query->execute();
 $query->store_result();
 $query->bind_result($id);
 $query->fetch();
-$_SESSION['id'] = $ID;
+$_SESSION['id'] = $id;
 
-if ($query->num_rows == 1){
+if ($query->num_rows > 0){
     echo("true");
 }else{
     echo("false");

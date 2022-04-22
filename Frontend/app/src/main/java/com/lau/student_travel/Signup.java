@@ -1,13 +1,17 @@
 package com.lau.student_travel;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +30,7 @@ public class Signup extends AppCompatActivity {
     TextView req1,req2,req3,req4,req5,login;
     EditText user,number,name,pass,confirmed_pass;
     public String message;
-    private String  post_url;
+    public String  post_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,8 @@ public class Signup extends AppCompatActivity {
         req4.setVisibility(View.GONE);
         req5.setVisibility(View.GONE);
 
-        post_url = "http://192.168.1.139/Mobile%20Computing/Final%20Project/Backend/sign_up.php";
+        message = "";
+        post_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/sign_up.php";
 
     }
 
@@ -62,6 +67,7 @@ public class Signup extends AppCompatActivity {
         String password = pass.getText().toString();
         String confirmed_password = confirmed_pass.getText().toString();
         req5.setText("Field Required!");
+        req1.setVisibility(View.GONE);
         req1.setText("Field required!");
 
         if (username.isEmpty()){
@@ -86,28 +92,27 @@ public class Signup extends AppCompatActivity {
                 req5.setVisibility(View.VISIBLE);
                 return;
             }else{
-                if(message.equals("correct")){
-                    PostRequest post = new PostRequest();// Initialize a PostRequest object everytime the user clicks the button.
-                    post.execute(username, password, phone_number, full_name, post_url);
+                PostRequest post = new PostRequest();// Initialize a PostRequest object everytime the user clicks the button.
+                post.execute(username, password, phone_number, full_name, post_url);
+                if(message.equals("correct")) {
                     Intent login = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(login);
                 }else{
                     pass.setText("");
                     confirmed_pass.setText("");
-                    req1.setText("Account already exists!");
                     req1.setVisibility(View.VISIBLE);
+                    req1.setText("Account already exists!");
                     req2.setVisibility(View.GONE);
                     req3.setVisibility(View.GONE);
                     req4.setVisibility(View.GONE);
                     req5.setVisibility(View.GONE);
-
-                    req1.setText(message);
                 }
 
             }
 
         }
     }
+
 
     public class PostRequest extends AsyncTask<String, Void, String> {
 
@@ -131,7 +136,6 @@ public class Signup extends AppCompatActivity {
                 urlConnection.setDoOutput(true);
 
                 OutputStream out = urlConnection.getOutputStream(); //Initializing OutputStream Object.
-
                 BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
 
                 // Setting the variables to be sent to the URL
@@ -140,6 +144,7 @@ public class Signup extends AppCompatActivity {
                         +URLEncoder.encode("full_name", "UTF-8")+"="+URLEncoder.encode(full_name, "UTF-8")+"&"
                         +URLEncoder.encode("phone", "UTF-8")+"="+URLEncoder.encode(phone, "UTF-8");
 
+                Log.i("data", post_data);
                 br.write(post_data); //Writing and sending data.
                 br.flush();
                 br.close();
@@ -147,7 +152,6 @@ public class Signup extends AppCompatActivity {
 
                 InputStream is = urlConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
-                message = "";
                 String line = "";
                 while((line = bufferedReader.readLine()) != null){
                     message += line;
@@ -158,8 +162,10 @@ public class Signup extends AppCompatActivity {
 
                 //Catching exceptions
             } catch (MalformedURLException e) {
+                Log.i("MalF",e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
+                Log.i("Ioexp",e.getMessage());
                 e.printStackTrace();
             }
             return null;
