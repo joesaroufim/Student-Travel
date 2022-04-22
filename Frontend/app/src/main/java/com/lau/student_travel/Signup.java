@@ -64,8 +64,6 @@ public class Signup extends AppCompatActivity {
         req5.setText("Field Required!");
         req1.setText("Field required!");
 
-        PostRequest()
-
         if (username.isEmpty()){
             req1.setVisibility(View.VISIBLE);
             return;
@@ -89,6 +87,8 @@ public class Signup extends AppCompatActivity {
                 return;
             }else{
                 if(message.equals("correct")){
+                    PostRequest post = new PostRequest();// Initialize a PostRequest object everytime the user clicks the button.
+                    post.execute(username, password, phone_number, full_name, post_url);
                     Intent login = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(login);
                 }else{
@@ -100,6 +100,8 @@ public class Signup extends AppCompatActivity {
                     req3.setVisibility(View.GONE);
                     req4.setVisibility(View.GONE);
                     req5.setVisibility(View.GONE);
+
+                    req1.setText(message);
                 }
 
             }
