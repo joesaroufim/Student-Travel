@@ -3,16 +3,31 @@ package com.lau.student_travel;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 
 public class Profile extends AppCompatActivity {
 
     EditText arriving_date, location, sex, uni, field;
     TextView can_help, need_help;
-    String gender, date, college, major, status;
+    String gender, date, college, major, status, country, post_url;
+    String message = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +42,7 @@ public class Profile extends AppCompatActivity {
 
         can_help = (TextView) findViewById(R.id.can_help);
         need_help = (TextView) findViewById(R.id.need_help);
+        post_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/profile.php";
 
     }
 
@@ -43,11 +59,17 @@ public class Profile extends AppCompatActivity {
         date = arriving_date.getText().toString();
         college = uni.getText().toString();
         major = field.getText().toString();
+        country = location.getText().toString();
 
         if (status.isEmpty()){
 
         }else{
+            PostRequest post = new PostRequest();
+            post.execute(gender, date, country, college, major, status, post_url);
+            while(message.isEmpty()){
 
+            }
+            Toast.makeText(getApplicationContext(), "Profie updated", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -55,4 +77,81 @@ public class Profile extends AppCompatActivity {
         Intent home = new Intent(getApplicationContext(), Home.class);
         startActivity(home);
     }
+
+
+
+    public class PostRequest extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            //The method take String parameters and send data to the received url.
+
+            //Storing data in String objects
+            String gender = params[0];
+            String date = params[1];
+            String college = params[2];
+            String major = params[3];
+            String status = params[4];
+            String str_url = params[5];
+
+            try {
+                // Creating a new URL connection with PHP.
+                URL url = new URL(str_url);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+
+                OutputStream out = urlConnection.getOutputStream(); //Initializing OutputStream Object.
+
+                BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
+
+                // Setting the variables to be sent to the URL
+                String post_data = URLEncoder.encode("gender", "UTF-8")+"="+URLEncoder.encode(gender, "UTF-8")+"&"
+                        +URLEncoder.encode("date", "UTF-8")+"="+URLEncoder.encode(date, "UTF-8")+"&"
+                        +URLEncoder.encode("college", "UTF-8")+"="+URLEncoder.encode(college, "UTF-8")+"&"
+                        +URLEncoder.encode("major", "UTF-8")+"="+URLEncoder.encode(major, "UTF-8")+"&"
+                        +URLEncoder.encode("status", "UTF-8")+"="+URLEncoder.encode(status, "UTF-8");
+
+                br.write(post_data); //Writing and sending data.
+                br.flush();
+                br.close();
+                out.close();
+
+                InputStream is = urlConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
+                String line = "";
+                while((line = bufferedReader.readLine()) != null){
+                    message = line;
+                }
+                bufferedReader.close();
+                is.close();
+                urlConnection.disconnect();
+
+                //Catching exceptions
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
+
 }
