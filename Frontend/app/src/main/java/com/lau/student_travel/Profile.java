@@ -3,8 +3,10 @@ package com.lau.student_travel;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,7 +29,7 @@ public class Profile extends AppCompatActivity {
     EditText arriving_date, location, sex, uni, field;
     TextView can_help, need_help;
     String gender, date, college, major, status, country, post_url;
-    String message = "";
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +50,14 @@ public class Profile extends AppCompatActivity {
 
     public void canHelp(View view){
         status = "can help";
+        view.setBackgroundColor(Color.parseColor("#138B9A"));
+        need_help.setBackgroundColor(Color.parseColor("#F2F6F6"));
     }
 
     public void needHelp(View view){
         status = "need help";
+        view.setBackgroundColor(Color.parseColor("#138B9A"));
+        can_help.setBackgroundColor(Color.parseColor("#F2F6F6"));
     }
 
     public void update(View view){
@@ -66,9 +72,6 @@ public class Profile extends AppCompatActivity {
         }else{
             PostRequest post = new PostRequest();
             post.execute(gender, date, country, college, major, status, post_url);
-            while(message.isEmpty()){
-
-            }
             Toast.makeText(getApplicationContext(), "Profie updated", Toast.LENGTH_LONG).show();
         }
     }
@@ -77,7 +80,6 @@ public class Profile extends AppCompatActivity {
         Intent home = new Intent(getApplicationContext(), Home.class);
         startActivity(home);
     }
-
 
 
     public class PostRequest extends AsyncTask<String, Void, String> {
@@ -89,12 +91,15 @@ public class Profile extends AppCompatActivity {
             //Storing data in String objects
             String gender = params[0];
             String date = params[1];
-            String college = params[2];
-            String major = params[3];
-            String status = params[4];
-            String str_url = params[5];
+            String country = params[2];
+            String college = params[3];
+            String major = params[4];
+            String status = params[5];
+            String str_url = params[6];
+            message = "";
 
             try {
+                Log.i("gender", gender);
                 // Creating a new URL connection with PHP.
                 URL url = new URL(str_url);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -111,7 +116,8 @@ public class Profile extends AppCompatActivity {
                         +URLEncoder.encode("date", "UTF-8")+"="+URLEncoder.encode(date, "UTF-8")+"&"
                         +URLEncoder.encode("college", "UTF-8")+"="+URLEncoder.encode(college, "UTF-8")+"&"
                         +URLEncoder.encode("major", "UTF-8")+"="+URLEncoder.encode(major, "UTF-8")+"&"
-                        +URLEncoder.encode("status", "UTF-8")+"="+URLEncoder.encode(status, "UTF-8");
+                        +URLEncoder.encode("status", "UTF-8")+"="+URLEncoder.encode(status, "UTF-8")+"&"
+                        +URLEncoder.encode("country", "UTF-8")+"="+URLEncoder.encode(country, "UTF-8");
 
                 br.write(post_data); //Writing and sending data.
                 br.flush();
@@ -130,8 +136,10 @@ public class Profile extends AppCompatActivity {
 
                 //Catching exceptions
             } catch (MalformedURLException e) {
+                Log.i("MalF",e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
+                Log.i("Ioexp",e.getMessage());
                 e.printStackTrace();
             }
             return null;
