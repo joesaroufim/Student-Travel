@@ -45,29 +45,6 @@ public class Home extends AppCompatActivity {
         table.setColumnStretchable(1,true);
         table.setColumnStretchable(2,true);
 
-        for (int i = 0; i<full_name.length; i++){
-            row = new TableRow(this);
-            col1 = new TextView(this);
-            col2= new TextView(this);
-            col3 = new TextView(this);
-            col1.setText(full_name[i]);
-            col1.setTextSize(20);
-            col1.setGravity(Gravity.CENTER);
-            col1.setTypeface(null, Typeface.BOLD);
-            col2.setText(username[i]);
-            col2.setTextSize(20);
-            col2.setGravity(Gravity.CENTER);
-            col2.setTypeface(null, Typeface.BOLD);
-            col3.setText("hello");
-            col3.setTextSize(20);
-            col3.setGravity(Gravity.CENTER);
-            col3.setTypeface(null, Typeface.BOLD);
-            row.addView(col1);
-            row.addView(col2);
-            row.addView(col3);
-            table.addView(row);
-        }
-
     }
 
     public void profile (View view){
@@ -103,7 +80,7 @@ public class Home extends AppCompatActivity {
                 Log.i("exeDOin",e.getMessage());
                 return null;
             }
-            Log.i("entered:", "hellooo");
+            Log.i("entered:", results);
             return results;
         }
 
@@ -112,7 +89,7 @@ public class Home extends AppCompatActivity {
             super.onPostExecute(s);
             try{
 
-                Log.i("String", s);
+                Log.i("String", "im here");
                 JSONArray json_array  = new JSONArray(s); //Creating a JSON object.
 
                 ArrayList<Object> list = new ArrayList<>();
@@ -132,11 +109,36 @@ public class Home extends AppCompatActivity {
                     full_name[i] = obj.getString("name");
                     username[i] = obj.getString("username");
                 }
-                Log.i("name", full_name[0]);
+                Log.i("nameee", full_name[0]);
+
+                for (int i = 0; i<full_name.length; i++){
+                    row = new TableRow(getApplicationContext());
+                    col1 = new TextView(getApplicationContext());
+                    col2= new TextView(getApplicationContext());
+                    col3 = new TextView(getApplicationContext());
+                    col1.setText(full_name[i]);
+                    col1.setTextSize(20);
+                    col1.setGravity(Gravity.CENTER);
+                    col1.setTypeface(null, Typeface.BOLD);
+                    col2.setText(username[i]);
+                    col2.setTextSize(20);
+                    col2.setGravity(Gravity.CENTER);
+                    col2.setTypeface(null, Typeface.BOLD);
+                    col3.setText("hello");
+                    col3.setTextSize(20);
+                    col3.setGravity(Gravity.CENTER);
+                    col3.setTypeface(null, Typeface.BOLD);
+                    row.addView(col1);
+                    row.addView(col2);
+                    row.addView(col3);
+                    table.addView(row);
+                }
+
 
             }catch(Exception e){
                 Log.i("exeOnPost",e.getMessage());
             }
+
         }
     }
 
