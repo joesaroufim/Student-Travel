@@ -2,9 +2,12 @@
 
 include ("db_info.php");
 
-$id = $_SESSION['id'];
+// $id = $_SESSION['id'];
+$id = 7;
 
-$query = $mysqli->prepare("SELECT name, status, university FROM users NATURAL JOIN voyages WHERE  user_id IN (SELECT favorite_id FROM favorites WHERE user_id = ? ");
+// user_id IN (SELECT favorite_id FROM favorites WHERE user_id = ? ");
+
+$query = $mysqli->prepare("SELECT name, phone_number, username FROM users NATURAL JOIN favorites WHERE user_id = ? ");
 $query->bind_param('i', $id);
 $query->execute();
 
@@ -15,6 +18,9 @@ $response = [];
 while($result = $array->fetch_assoc()){
     $response[] = $result;
 }
+
+$json_response = json_encode($response);
+echo $json_response;
 
 
 ?>
