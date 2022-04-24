@@ -53,6 +53,11 @@ public class Home extends AppCompatActivity {
         startActivity(profile);
     }
 
+    public void filter(View view){
+        Intent filter = new Intent(getApplicationContext(), Filter.class);
+        startActivity(filter);
+    }
+
 
 
     public class GetRequest extends AsyncTask<String, Void, String> {
