@@ -29,6 +29,7 @@ public class Home extends AppCompatActivity {
     TableLayout table;
     TableRow row;
     public String[] full_name, username;
+    public String send_username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class Home extends AppCompatActivity {
                 Log.i("nameee", full_name[0]);
 
                 for (int i = 0; i<full_name.length; i++){
-                    row = new TableRow(getApplicationContext());
+                    final TableRow new_row = new TableRow(getApplicationContext());
                     col1 = new TextView(getApplicationContext());
                     col2= new TextView(getApplicationContext());
                     col3 = new TextView(getApplicationContext());
@@ -128,13 +129,21 @@ public class Home extends AppCompatActivity {
                     col3.setTextSize(20);
                     col3.setGravity(Gravity.CENTER);
                     col3.setTypeface(null, Typeface.BOLD);
-                    row.addView(col1);
-                    row.addView(col2);
-                    row.addView(col3);
-                    table.addView(row);
+                    new_row.addView(col1);
+                    new_row.addView(col2);
+                    new_row.addView(col3);
+                    new_row.setId(i);
+                    send_username = username[i];
+                    new_row.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent person = new Intent(getApplicationContext(), person.class);
+                            person.putExtra("username", send_username);
+                            startActivity(person);
+                        }
+                    });
+                    table.addView(new_row);
                 }
-
-
             }catch(Exception e){
                 Log.i("exeOnPost",e.getMessage());
             }

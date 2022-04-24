@@ -2,6 +2,8 @@
 
 include ("db_info.php");
 
+session_start();
+
 $name = $_POST['name'];
 $country = $_POST['country'];
 $gender = $_POST['gender'];
@@ -10,8 +12,8 @@ $college = $_POST['college'];
 $major = $_POST['major'];
 $date = $_POST['date'];
 $status = $_POST['status'];
-$id = 7;
-// $id = $_SESSION['id'];
+// $id = 7;
+$id = $_SESSION['id'];
 
 $query = $mysqli->prepare("UPDATE users SET name = ?, gender = ?, status = ? WHERE user_id = ?");
 if ($query){

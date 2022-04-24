@@ -2,6 +2,7 @@
 
 include ("db_info.php");
 
+session_start();
 $username = $_POST['username'];
 $password = hash("sha256",$mysqli->real_escape_string($_POST['password']));
 

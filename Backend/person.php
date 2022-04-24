@@ -4,13 +4,11 @@ include ("db_info.php");
 
 session_start();
 
-// $id = $_SESSION['id'];
-$id = 7;
+$username = $_GET['username'];
 
-// user_id IN (SELECT favorite_id FROM favorites WHERE user_id = ? ");
 
-$query = $mysqli->prepare("SELECT name, phone_number, username FROM users NATURAL JOIN favorites WHERE user_id = ? ");
-$query->bind_param('i', $id);
+$query = $mysqli->prepare("SELECT name, phone_number, gender, university, destination, status, arriving_date, major FROM users NATURAL JOIN voyages WHERE username = ? ");
+$query->bind_param('s', $username);
 $query->execute();
 
 $array = $query->get_result();
@@ -23,6 +21,5 @@ while($result = $array->fetch_assoc()){
 
 $json_response = json_encode($response);
 echo $json_response;
-
 
 ?>
