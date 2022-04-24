@@ -189,4 +189,16 @@
         app:layout_constraintVertical_bias="0.32"
         app:srcCompat="@drawable/profile" />
 
+    <ImageView
+        android:id="@+id/imageView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view11"
+        app:layout_constraintVertical_bias="0.35000002"
+        app:srcCompat="@drawable/filter_logo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
