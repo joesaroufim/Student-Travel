@@ -128,8 +128,11 @@ public class Profile extends AppCompatActivity {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
                 while((line = bufferedReader.readLine()) != null){
-                    message = line;
+                    message += line;
                 }
+
+                Log.i("update", message);
+
                 bufferedReader.close();
                 is.close();
                 urlConnection.disconnect();

@@ -94,19 +94,7 @@ public class Signup extends AppCompatActivity {
             }else{
                 PostRequest post = new PostRequest();// Initialize a PostRequest object everytime the user clicks the button.
                 post.execute(username, password, phone_number, full_name, post_url);
-                if(message.equals("correct")) {
-                    Intent login = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(login);
-                }else{
-                    pass.setText("");
-                    confirmed_pass.setText("");
-                    req1.setVisibility(View.VISIBLE);
-                    req1.setText("Account already exists!");
-                    req2.setVisibility(View.GONE);
-                    req3.setVisibility(View.GONE);
-                    req4.setVisibility(View.GONE);
-                    req5.setVisibility(View.GONE);
-                }
+
 
             }
 
@@ -154,8 +142,24 @@ public class Signup extends AppCompatActivity {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
                 while((line = bufferedReader.readLine()) != null){
-                    message += line;
+                    message = line;
                 }
+
+                if(message.equals("correct")) {
+                    Intent login = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(login);
+                }else{
+                    pass.setText("");
+                    confirmed_pass.setText("");
+                    req1.setVisibility(View.VISIBLE);
+                    req1.setText("Account already exists!");
+                    req2.setVisibility(View.GONE);
+                    req3.setVisibility(View.GONE);
+                    req4.setVisibility(View.GONE);
+                    req5.setVisibility(View.GONE);
+                }
+
+                Log.i("message", message);
                 bufferedReader.close();
                 is.close();
                 urlConnection.disconnect();

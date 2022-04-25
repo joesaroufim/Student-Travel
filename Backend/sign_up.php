@@ -13,7 +13,7 @@ $query->execute();
 $query->store_result();
 $query->fetch();
 
-if($query->num_rows == 1){
+if($query->num_rows > 0){
     echo ("username already exists");
 }else{
     echo("correct");

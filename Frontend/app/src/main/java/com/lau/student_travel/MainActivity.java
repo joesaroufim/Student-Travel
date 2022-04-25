@@ -66,14 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-            if (message.equals("true")){
-                Intent home = new Intent(getApplicationContext(), Home.class);
-                startActivity(home);
-            }else{
-                cred_error.setVisibility(View.VISIBLE);
-                pass.setText("");
-            }
-
         }
     }
 
@@ -120,6 +112,15 @@ public class MainActivity extends AppCompatActivity {
                 while((line = bufferedReader.readLine()) != null){
                     message = line;
                  }
+
+                if (message.equals("true")){
+                    Intent home = new Intent(getApplicationContext(), Home.class);
+                    startActivity(home);
+                }else{
+                    cred_error.setVisibility(View.VISIBLE);
+                    pass.setText("");
+                }
+
                 bufferedReader.close();
                 is.close();
                 urlConnection.disconnect();
