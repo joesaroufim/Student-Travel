@@ -139,14 +139,14 @@
 
                 <EditText
                     android:id="@+id/major"
-                    android:layout_width="94dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="108dp"
                     android:layout_marginTop="266dp" />
 
                 <EditText
                     android:id="@+id/date"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="108dp"
                     android:layout_marginTop="336dp" />
