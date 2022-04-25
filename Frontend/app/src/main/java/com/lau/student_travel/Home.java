@@ -27,7 +27,6 @@ public class Home extends AppCompatActivity {
 
     TextView col1, col2,col3;
     TableLayout table;
-    TableRow row;
     public String[] full_name, username;
     public String send_username;
 

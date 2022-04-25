@@ -3,9 +3,15 @@ package com.lau.student_travel;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +31,9 @@ import java.util.ArrayList;
 
 public class List extends AppCompatActivity {
 
-    String college, country, major, status, post_url;
+    TextView col1, col2,col3;
+    TableLayout table;
+    String college, country, major, status, post_url, send_username;
     String message;
     String[] name, username;
 
@@ -33,6 +41,11 @@ public class List extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        table = (TableLayout) findViewById(R.id.table);
+        table.setColumnStretchable(0,true);
+        table.setColumnStretchable(1,true);
+        table.setColumnStretchable(2,true);
 
         Intent message = getIntent();
         college= message.getStringExtra("college");
@@ -126,11 +139,47 @@ public class List extends AppCompatActivity {
                     }
                 }
                 username = new String[json_array.length()];
+                name = new String[json_array.length()];
 
                 for(int i = 0; i < list.size(); i++){
                     obj = (JSONObject) json_array.get(i);
                     username[i] = obj.getString("username");
+                    name[i] = obj.getString("name");
                 }
+
+                for (int i = 0; i<name.length; i++){
+                    final TableRow new_row = new TableRow(getApplicationContext());
+                    col1 = new TextView(getApplicationContext());
+                    col2= new TextView(getApplicationContext());
+                    col3 = new TextView(getApplicationContext());
+                    col1.setText(name[i]);
+                    col1.setTextSize(20);
+                    col1.setGravity(Gravity.CENTER);
+                    col1.setTypeface(null, Typeface.BOLD);
+                    col2.setText(username[i]);
+                    col2.setTextSize(20);
+                    col2.setGravity(Gravity.CENTER);
+                    col2.setTypeface(null, Typeface.BOLD);
+                    col3.setText(college);
+                    col3.setTextSize(20);
+                    col3.setGravity(Gravity.CENTER);
+                    col3.setTypeface(null, Typeface.BOLD);
+                    new_row.addView(col1);
+                    new_row.addView(col2);
+                    new_row.addView(col3);
+                    new_row.setId(i);
+                    send_username = username[i];
+                    new_row.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent person = new Intent(getApplicationContext(), person.class);
+                            person.putExtra("username", send_username);
+                            startActivity(person);
+                        }
+                    });
+                    table.addView(new_row);
+                }
+
             }catch(Exception e){
                 Log.i("exeOnPost",e.getMessage());
             }
