@@ -3,25 +3,33 @@ package com.lau.student_travel;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class person extends AppCompatActivity {
 
-    TextView arriving_date, location, sex, uni, field, can_help, user_name;
-    String username, get_url;
+    TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite;
+    String username, get_url, fav_url, message;
     public String[] name, college, phone, country, date, status, major, gender;
 
     @Override
@@ -37,13 +45,97 @@ public class person extends AppCompatActivity {
         uni = (TextView) findViewById(R.id.uni);
         sex = (TextView) findViewById(R.id.gender);
         field = (TextView) findViewById(R.id.major);
-        can_help = (TextView) findViewById(R.id.can_help);
+        can_help = (TextView) findViewById(R.id.favorite);
         user_name = (TextView) findViewById(R.id.user_name);
+        favorite = (TextView) findViewById(R.id.favorite);
 
         get_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/person.php?username="+username;
         GetRequest get = new GetRequest();
         get.execute(get_url);
+
+        fav_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
     }
+
+    public void addFavorite(View view){
+        view.setBackgroundColor(Color.parseColor("#138B9A"));
+        favorite.setBackgroundColor(Color.parseColor("#F2F6F6"));
+        Favorite fav = new Favorite();
+        fav.execute(username, fav_url);
+    }
+
+
+    public class Favorite extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            //The method take String parameters and send data to the received url.
+
+            //Storing data in String objects
+            String username = params[0];
+            String str_url = params[1];
+
+            message = "";
+
+            try {
+                Log.i("gender", username);
+                // Creating a new URL connection with PHP.
+                URL url = new URL(str_url);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+
+                OutputStream out = urlConnection.getOutputStream(); //Initializing OutputStream Object.
+
+                BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
+
+                // Setting the variables to be sent to the URL
+                String post_data = URLEncoder.encode("username", "UTF-8")+"="+URLEncoder.encode(username, "UTF-8");
+
+
+                br.write(post_data); //Writing and sending data.
+                br.flush();
+                br.close();
+                out.close();
+
+                InputStream is = urlConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
+                String line = "";
+                while((line = bufferedReader.readLine()) != null){
+                    message = line;
+                }
+                bufferedReader.close();
+                is.close();
+                urlConnection.disconnect();
+
+                //Catching exceptions
+            } catch (MalformedURLException e) {
+                Log.i("MalF",e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.i("Ioexp",e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
+
 
 
     public class GetRequest extends AsyncTask<String, Void, String> {
