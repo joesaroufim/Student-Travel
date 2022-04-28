@@ -2,7 +2,9 @@ package com.lau.student_travel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,14 +31,18 @@ public class Home extends AppCompatActivity {
     TableLayout table;
     public String[] full_name, username;
     public String send_username;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+        id = shared.getInt("id", -1);
+
         table = (TableLayout) findViewById(R.id.table);
-        String get_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/list_favorites.php";
+        String get_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/list_favorites.php?user_id="+id;
 
         GetRequest get = new GetRequest();
         get.execute(get_url);
@@ -44,6 +50,8 @@ public class Home extends AppCompatActivity {
         table.setColumnStretchable(0,true);
         table.setColumnStretchable(1,true);
         table.setColumnStretchable(2,true);
+
+
 
     }
 

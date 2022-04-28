@@ -2,7 +2,9 @@ package com.lau.student_travel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     TextView signup, user_error, pass_error, cred_error;
     public String message, post_url;
 
+    SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         message = "";
         post_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/login.php";
+
+
+
 
     }
 
@@ -113,7 +120,11 @@ public class MainActivity extends AppCompatActivity {
                     message = line;
                  }
 
-                if (message.equals("true")){
+                String[] msg = message.split(" ");
+                String state = msg[0];
+
+                if (state.equals("true")){
+                    shared.edit().putInt("id", Integer.parseInt(msg[1]));
                     Intent home = new Intent(getApplicationContext(), Home.class);
                     startActivity(home);
                 }else{

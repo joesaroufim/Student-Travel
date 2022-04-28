@@ -5,7 +5,7 @@ include ("db_info.php");
 session_start();
 
 // $id = $_SESSION['id'];
-$id = 7;
+$id = $_GET['id'];
 
 // user_id IN (SELECT favorite_id FROM favorites WHERE user_id = ? ");
 

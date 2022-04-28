@@ -12,10 +12,11 @@ $query->execute();
 $query->store_result();
 $query->bind_result($id);
 $query->fetch();
-$_SESSION['id'] = $id;
+// $_SESSION['id'] = $id;
 
 if ($query->num_rows > 0){
     echo("true");
+    echo(" " + $id);
 }else{
     echo("false");
 }

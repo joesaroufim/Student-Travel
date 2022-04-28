@@ -4,7 +4,7 @@ include ("db_info.php");
 
 session_start();
 
-$user_id = $_SESSION['id'];
+$user_id = $_POST['id'];
 $username = $_POST['username'];
 
 echo($_SESSION['id']);
