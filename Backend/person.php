@@ -2,9 +2,7 @@
 
 include ("db_info.php");
 
-session_start();
-
-$username = $_GET['username'];
+$username = $_POST['username'];
 
 
 $query = $mysqli->prepare("SELECT name, phone_number, gender, university, destination, status, arriving_date, major FROM users NATURAL JOIN voyages WHERE username = ? ");

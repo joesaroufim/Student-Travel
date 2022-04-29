@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 public class person extends AppCompatActivity {
 
     TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite;
-    String username, get_url, fav_url, message;
+    String username, post_url, fav_url, message;
     public String[] name, college, phone, country, date, status, major, gender;
     int id;
 
@@ -55,9 +58,9 @@ public class person extends AppCompatActivity {
         user_name = (TextView) findViewById(R.id.user_name);
         favorite = (TextView) findViewById(R.id.favorite);
 
-        get_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/person.php?username="+username;
-        GetRequest get = new GetRequest();
-        get.execute(get_url);
+        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/person.php";
+        PostRequest post = new PostRequest();
+        post.execute(username,post_url);
 
         fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
     }
@@ -66,7 +69,7 @@ public class person extends AppCompatActivity {
         view.setBackgroundColor(Color.parseColor("#138B9A"));
         favorite.setBackgroundColor(Color.parseColor("#F2F6F6"));
         Favorite fav = new Favorite();
-        fav.execute(username, fav_url);
+        fav.execute(""+id, username, fav_url);
     }
 
 
@@ -142,44 +145,67 @@ public class person extends AppCompatActivity {
     }
 
 
+    public class PostRequest extends AsyncTask<String, Void, String> {
 
+        @Override
+        protected String doInBackground(String... params) {
+            //The method take String parameters and send data to the received url.
 
-    public class GetRequest extends AsyncTask<String, Void, String> {
-        // This class contains methods that enable url connection to an API to retrieve data stored in it.
+            //Storing data in String objects
+            String username = params[0];
+            String str_url = params[1];
 
-        protected String doInBackground(String... urls){
-            //The method takes String parameter and gets a required data from an external URL API.
-            URL url;
-            HttpURLConnection http; //Initializing the url connection object
-            String results = "";
-            try{
-                url = new URL(urls[0]);
-                http = (HttpURLConnection) url.openConnection(); //Declaring the Url connection object
+            message = "";
 
-                InputStream inputStream = http.getInputStream(); //initializing InputStream Object to pass data.
+            try {
+                Log.i("username", username);
+                // Creating a new URL connection with PHP.
+                URL url = new URL(str_url);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)); //Initializing BufferedReader Object to Read data.
-                String line = reader.readLine(); //Get the data ad store it in a String.
+                OutputStream out = urlConnection.getOutputStream(); //Initializing OutputStream Object.
 
-                while( line  != null){
-                    results += line;
-                    line = reader.readLine(); //Concatenate each line
+                BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
+
+                // Setting the variables to be sent to the URL
+                String post_data = URLEncoder.encode("username", "UTF-8")+"="+URLEncoder.encode(username, "UTF-8");
+
+                br.write(post_data); //Writing and sending data.
+                br.flush();
+                br.close();
+                out.close();
+
+                InputStream is = urlConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
+                String line = "";
+                while((line = bufferedReader.readLine()) != null){
+                    message += line;
                 }
 
-            }catch(Exception e){
-                Log.i("exeDOin",e.getMessage());
-                return null;
+                //Catching exceptions
+            } catch (MalformedURLException e) {
+                Log.i("MalF",e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.i("Ioexp",e.getMessage());
+                e.printStackTrace();
             }
-            Log.i("entered:", results);
-            return results;
+            Log.i("Person message", message);
+
+            return message;
         }
 
+        @Override
         protected void onPostExecute(String s) {
+
             // This method converts the JSON Object received into a String.
             super.onPostExecute(s);
             try{
 
-                Log.i("String", s);
+                Log.i("Person String", s);
                 JSONArray json_array  = new JSONArray(s); //Creating a JSON object.
 
                 ArrayList<Object> list = new ArrayList<>();
@@ -226,5 +252,16 @@ public class person extends AppCompatActivity {
             }
 
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
     }
+
 }

@@ -2,7 +2,9 @@ package com.lau.student_travel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,11 +32,15 @@ public class Profile extends AppCompatActivity {
     TextView can_help, need_help;
     String gender, date, college, major, status, country, post_url;
     String message;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+        id = shared.getInt("id", -1);
 
         arriving_date = (EditText) findViewById(R.id.date);
         location = (EditText) findViewById(R.id.country);
@@ -71,7 +77,7 @@ public class Profile extends AppCompatActivity {
 
         }else{
             PostRequest post = new PostRequest();
-            post.execute(gender, date, country, college, major, status, post_url);
+            post.execute(gender, date, country, college, major, status, ""+id, post_url);
             Toast.makeText(getApplicationContext(), "Profie updated", Toast.LENGTH_LONG).show();
         }
     }
@@ -95,7 +101,8 @@ public class Profile extends AppCompatActivity {
             String college = params[3];
             String major = params[4];
             String status = params[5];
-            String str_url = params[6];
+            String id = params[6];
+            String str_url = params[7];
             message = "";
 
             try {
@@ -117,6 +124,7 @@ public class Profile extends AppCompatActivity {
                         +URLEncoder.encode("college", "UTF-8")+"="+URLEncoder.encode(college, "UTF-8")+"&"
                         +URLEncoder.encode("major", "UTF-8")+"="+URLEncoder.encode(major, "UTF-8")+"&"
                         +URLEncoder.encode("status", "UTF-8")+"="+URLEncoder.encode(status, "UTF-8")+"&"
+                        +URLEncoder.encode("id", "UTF-8")+"="+URLEncoder.encode(id, "UTF-8")+"&"
                         +URLEncoder.encode("country", "UTF-8")+"="+URLEncoder.encode(country, "UTF-8");
 
                 br.write(post_data); //Writing and sending data.

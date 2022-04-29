@@ -14,7 +14,7 @@ $college = $_POST['college'];
 $major = $_POST['major'];
 $date = $_POST['date'];
 $status = $_POST['status'];
-// $id = 7;
+$id = $_POST['id'];
 
 $query = $mysqli->prepare("UPDATE users SET  gender = ?, status = ? WHERE user_id = ?");
 if ($query){

@@ -105,7 +105,6 @@ public class List extends AppCompatActivity {
                 String line = "";
                 while((line = bufferedReader.readLine()) != null){
                     message += line;
-                    line = bufferedReader.readLine();
                 }
 
                 //Catching exceptions
