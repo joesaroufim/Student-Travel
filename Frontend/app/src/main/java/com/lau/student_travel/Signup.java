@@ -56,7 +56,7 @@ public class Signup extends AppCompatActivity {
         req5.setVisibility(View.GONE);
 
         message = "";
-        post_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/sign_up.php";
+        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/sign_up.php";
 
     }
 

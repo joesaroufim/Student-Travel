@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,12 +31,14 @@ public class MainActivity extends AppCompatActivity {
     TextView signup, user_error, pass_error, cred_error;
     public String message, post_url;
 
-    SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+    SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
 
         user = (EditText) findViewById(R.id.username);
         pass = (EditText) findViewById(R.id.password);
@@ -49,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
         cred_error.setVisibility(View.GONE);
 
         message = "";
-        post_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/login.php";
-
-
+        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/login.php";
 
 
     }
@@ -69,10 +70,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             PostRequest post = new PostRequest();
             post.execute(username, password, post_url);
-            while(message.isEmpty()){
-
-            }
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -122,14 +119,16 @@ public class MainActivity extends AppCompatActivity {
 
                 String[] msg = message.split(" ");
                 String state = msg[0];
+                Log.i("msg", state);
 
                 if (state.equals("true")){
-                    shared.edit().putInt("id", Integer.parseInt(msg[1]));
+
+                    shared.edit().putInt("id", Integer.parseInt(msg[1])).commit();
                     Intent home = new Intent(getApplicationContext(), Home.class);
                     startActivity(home);
                 }else{
-                    cred_error.setVisibility(View.VISIBLE);
                     pass.setText("");
+//                    cred_error.setVisibility(View.VISIBLE);
                 }
 
                 bufferedReader.close();
@@ -138,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
 
                 //Catching exceptions
             } catch (MalformedURLException e) {
+                Log.i("MalF",e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
+                Log.i("IoExp",e.getMessage());
                 e.printStackTrace();
             }
             return null;

@@ -53,7 +53,7 @@ public class List extends AppCompatActivity {
         major= message.getStringExtra("major");
         status= message.getStringExtra("status");
 
-        post_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/list.php";
+        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/list.php";
         PostRequest post = new PostRequest();
         post.execute(college, country, major, status, post_url);
 

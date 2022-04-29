@@ -15,8 +15,7 @@ $query->fetch();
 // $_SESSION['id'] = $id;
 
 if ($query->num_rows > 0){
-    echo("true");
-    echo(" " + $id);
+    echo("true " . $id);
 }else{
     echo("false");
 }

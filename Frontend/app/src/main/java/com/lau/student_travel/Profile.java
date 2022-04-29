@@ -44,7 +44,7 @@ public class Profile extends AppCompatActivity {
 
         can_help = (TextView) findViewById(R.id.favorite);
         need_help = (TextView) findViewById(R.id.need_help);
-        post_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/profile.php";
+        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/profile.php";
 
     }
 

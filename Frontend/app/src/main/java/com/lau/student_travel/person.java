@@ -2,7 +2,9 @@ package com.lau.student_travel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,11 +33,15 @@ public class person extends AppCompatActivity {
     TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite;
     String username, get_url, fav_url, message;
     public String[] name, college, phone, country, date, status, major, gender;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
+
+        SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+        id = shared.getInt("id", -1);
 
         Intent message = getIntent();
         username = message.getStringExtra("username");
@@ -49,11 +55,11 @@ public class person extends AppCompatActivity {
         user_name = (TextView) findViewById(R.id.user_name);
         favorite = (TextView) findViewById(R.id.favorite);
 
-        get_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/person.php?username="+username;
+        get_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/person.php?username="+username;
         GetRequest get = new GetRequest();
         get.execute(get_url);
 
-        fav_url = "http://192.168.56.1/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
+        fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
     }
 
     public void addFavorite(View view){
