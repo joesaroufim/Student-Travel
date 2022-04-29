@@ -1,6 +1,7 @@
 package com.lau.student_travel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,8 +31,9 @@ import java.util.ArrayList;
 
 public class person extends AppCompatActivity {
 
-    TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite, full_name;
-    String username, post_url, fav_url, message;
+    TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite, full_name, number;
+    CardView card1, card2, card3;
+    String username, post_url, fav_url, message, phone_nb;
     public String[] name, college, phone, country, date, status, major, gender;
     int id;
 
@@ -57,12 +59,23 @@ public class person extends AppCompatActivity {
         full_name = (TextView) findViewById(R.id.full_name);
         user_name = (TextView) findViewById(R.id.username1);
         favorite = (TextView) findViewById(R.id.favorite);
+        number = (TextView) findViewById(R.id.phone1);
+        card1 = (CardView) findViewById(R.id.c1);
+        card2 = (CardView) findViewById(R.id.c2);
+        card3 = (CardView) findViewById(R.id.c3);
 
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/person.php";
         PostRequest post = new PostRequest();
         post.execute(username,post_url);
 
         fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
+    }
+
+    public void getNumber (View view){
+        number.setText(phone_nb);
+        card1.setAlpha(.2f);
+        card2.setAlpha(0.2f);
+        number.setVisibility(View.VISIBLE);
     }
 
     public void addFavorite(View view){
@@ -245,6 +258,7 @@ public class person extends AppCompatActivity {
                 can_help.setText(status[0]);
                 full_name.setText(name[0]);
                 user_name.setText(username);
+                phone_nb = phone[0];
 
                 Log.i("nameee", name[0]);
 
