@@ -158,7 +158,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="119dp">
 
                 <TextView
                     android:id="@+id/can_help2"
@@ -199,6 +199,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="40dp"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="60dp"
+                    app:srcCompat="@drawable/phone" />
 
             </androidx.cardview.widget.CardView>
 
