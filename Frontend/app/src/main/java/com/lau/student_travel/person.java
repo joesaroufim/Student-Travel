@@ -49,6 +49,8 @@ public class person extends AppCompatActivity {
         Intent message = getIntent();
         username = message.getStringExtra("username");
 
+        Log.i("Person username", username);
+
         arriving_date= (TextView) findViewById(R.id.date);
         location = (TextView) findViewById(R.id.country);
         uni = (TextView) findViewById(R.id.uni);

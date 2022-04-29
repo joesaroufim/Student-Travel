@@ -149,6 +149,7 @@ public class Home extends AppCompatActivity {
                     new_row.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            send_username = username[new_row.getId()];
                             Intent person = new Intent(getApplicationContext(), person.class);
                             person.putExtra("username", send_username);
                             startActivity(person);
