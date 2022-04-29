@@ -6,13 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -33,7 +30,7 @@ import java.util.ArrayList;
 
 public class person extends AppCompatActivity {
 
-    TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite;
+    TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite, full_name;
     String username, post_url, fav_url, message;
     public String[] name, college, phone, country, date, status, major, gender;
     int id;
@@ -56,8 +53,9 @@ public class person extends AppCompatActivity {
         uni = (TextView) findViewById(R.id.uni);
         sex = (TextView) findViewById(R.id.gender);
         field = (TextView) findViewById(R.id.major);
-        can_help = (TextView) findViewById(R.id.favorite);
-        user_name = (TextView) findViewById(R.id.user_name);
+        can_help = (TextView) findViewById(R.id.can_help2);
+        full_name = (TextView) findViewById(R.id.full_name);
+        user_name = (TextView) findViewById(R.id.username1);
         favorite = (TextView) findViewById(R.id.favorite);
 
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/person.php";
@@ -69,7 +67,6 @@ public class person extends AppCompatActivity {
 
     public void addFavorite(View view){
         view.setBackgroundColor(Color.parseColor("#138B9A"));
-        favorite.setBackgroundColor(Color.parseColor("#F2F6F6"));
         Favorite fav = new Favorite();
         fav.execute(""+id, username, fav_url);
     }
@@ -245,7 +242,8 @@ public class person extends AppCompatActivity {
                 sex.setText(gender[0]);
                 field.setText(major[0]);
                 can_help.setText(status[0]);
-                user_name.setText(name[0]);
+                full_name.setText(name[0]);
+                user_name.setText(username);
 
                 Log.i("nameee", name[0]);
 

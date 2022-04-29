@@ -7,8 +7,6 @@ session_start();
 $user_id = $_POST['id'];
 $username = $_POST['username'];
 
-echo($_SESSION['id']);
-
 $sql = $mysqli->prepare("SELECT user_id FROM users WHERE  username = ?");
 $sql->bind_param('s', $username);
 $sql->execute();
