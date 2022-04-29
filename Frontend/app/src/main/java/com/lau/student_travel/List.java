@@ -2,7 +2,9 @@ package com.lau.student_travel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,11 +38,15 @@ public class List extends AppCompatActivity {
     String college, country, major, status, post_url, send_username;
     String message;
     String[] name, username;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+        id = shared.getInt("id", -1);
 
         table = (TableLayout) findViewById(R.id.table);
         table.setColumnStretchable(0,true);
@@ -171,6 +177,7 @@ public class List extends AppCompatActivity {
                     new_row.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            send_username = username[new_row.getId()];
                             Intent person = new Intent(getApplicationContext(), person.class);
                             person.putExtra("username", send_username);
                             startActivity(person);

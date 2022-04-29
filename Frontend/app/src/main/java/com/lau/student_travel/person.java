@@ -98,7 +98,8 @@ public class person extends AppCompatActivity {
                 BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
 
                 // Setting the variables to be sent to the URL
-                String post_data = URLEncoder.encode("username", "UTF-8")+"="+URLEncoder.encode(username, "UTF-8");
+                String post_data = URLEncoder.encode("username", "UTF-8")+"="+URLEncoder.encode(username, "UTF-8")+"&"
+                        +URLEncoder.encode("id", "UTF-8")+"="+URLEncoder.encode(""+id, "UTF-8");
 
 
                 br.write(post_data); //Writing and sending data.

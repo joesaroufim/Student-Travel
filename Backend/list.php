@@ -2,8 +2,6 @@
 
 include ("db_info.php");
 
-session_start();
-
 $university = $_POST['college'];
 $country = $_POST['country'];
 $major = $_POST['major'];
