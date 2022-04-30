@@ -10,7 +10,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +27,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 public class Profile extends AppCompatActivity {
 
-    EditText arriving_date, location, sex, uni, field;
+    EditText arriving_date, location, uni, field;
     TextView can_help, need_help;
+    Spinner spinner;
     String gender, date, college, major, status, country, post_url;
     String message;
     int id;
@@ -44,12 +48,23 @@ public class Profile extends AppCompatActivity {
 
         arriving_date = (EditText) findViewById(R.id.date);
         location = (EditText) findViewById(R.id.country);
-        sex = (EditText) findViewById(R.id.gender);
         uni = (EditText) findViewById(R.id.uni);
         field = (EditText) findViewById(R.id.major);
 
         can_help = (TextView) findViewById(R.id.favorite);
         need_help = (TextView) findViewById(R.id.need_help);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+
+        //Creating arrayList for the Spinner
+        ArrayList<String> gender_list = new ArrayList<String>();
+        gender_list.add("Male");
+        gender_list.add("Female");
+
+        //Assigning an adapter and the list as dropdown
+        ArrayAdapter<String> my_adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, gender_list);
+        spinner.setAdapter(my_adapter);
+
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/profile.php";
 
     }
@@ -67,7 +82,7 @@ public class Profile extends AppCompatActivity {
     }
 
     public void update(View view){
-        gender = sex.getText().toString();
+        gender = spinner.getSelectedItem().toString();
         date = arriving_date.getText().toString();
         college = uni.getText().toString();
         major = field.getText().toString();
