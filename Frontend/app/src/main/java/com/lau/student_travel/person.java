@@ -71,6 +71,16 @@ public class person extends AppCompatActivity {
         fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
     }
 
+    public void home(View view){
+        Intent home = new Intent (getApplicationContext(), Home.class);
+        startActivity(home);
+    }
+
+    public void filter(View view){
+        Intent filter = new Intent (getApplicationContext(), Filter.class);
+        startActivity(filter);
+    }
+
     public void getNumber (View view){
         number.setText(phone_nb);
         card1.setAlpha(.2f);

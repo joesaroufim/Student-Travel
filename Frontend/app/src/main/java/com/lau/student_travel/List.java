@@ -65,6 +65,21 @@ public class List extends AppCompatActivity {
 
     }
 
+    public void home(View view){
+        Intent home = new Intent (getApplicationContext(), Home.class);
+        startActivity(home);
+    }
+
+    public void filter(View view){
+        Intent filter = new Intent (getApplicationContext(), Filter.class);
+        startActivity(filter);
+    }
+
+    public void profile(View view){
+        Intent profile = new Intent (getApplicationContext(), Profile.class);
+        startActivity(profile);
+    }
+
 
     public class PostRequest extends AsyncTask<String, Void, String> {
 
