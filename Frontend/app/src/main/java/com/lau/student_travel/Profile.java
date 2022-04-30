@@ -69,6 +69,7 @@ public class Profile extends AppCompatActivity {
 
     }
 
+
     public void canHelp(View view){
         status = "can help";
         view.setBackgroundColor(Color.parseColor("#138B9A"));
@@ -100,6 +101,11 @@ public class Profile extends AppCompatActivity {
     public void home(View view){
         Intent home = new Intent(getApplicationContext(), Home.class);
         startActivity(home);
+    }
+
+    public void filter(View view){
+        Intent filter = new Intent (getApplicationContext(), Filter.class);
+        startActivity(filter);
     }
 
 
