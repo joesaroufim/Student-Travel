@@ -108,6 +108,11 @@ public class Profile extends AppCompatActivity {
         startActivity(filter);
     }
 
+    public void signout (View view){
+        Intent signout = new Intent (getApplicationContext(), MainActivity.class);
+        startActivity(signout);
+    }
+
 
     public class PostRequest extends AsyncTask<String, Void, String> {
 
