@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+        shared.edit().putString("flag", "false").commit();
 
         //Getting the EditText Views by their Ids
         user = (EditText) findViewById(R.id.username);

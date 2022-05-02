@@ -36,6 +36,7 @@ public class Profile extends AppCompatActivity {
     Spinner spinner;
     String gender, date, college, major, status, country, post_url;
     String message;
+    SharedPreferences shared;
     int id;
 
     @Override
@@ -43,8 +44,9 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
+        shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
         id = shared.getInt("id", -1);
+        String flag = shared.getString("flag", "");
 
         arriving_date = (EditText) findViewById(R.id.date);
         location = (EditText) findViewById(R.id.country);
@@ -55,6 +57,14 @@ public class Profile extends AppCompatActivity {
         need_help = (TextView) findViewById(R.id.need_help);
 
         spinner = (Spinner) findViewById(R.id.spinner);
+
+        if(flag.equals("true")){
+            arriving_date.setText(shared.getString("date", ""));
+            location.setText(shared.getString("country", ""));
+            uni.setText(shared.getString("college", ""));
+            field.setText(shared.getString("major", ""));
+            spinner.setSelection(0);
+        }
 
         //Creating arrayList for the Spinner
         ArrayList<String> gender_list = new ArrayList<String>();
@@ -88,6 +98,14 @@ public class Profile extends AppCompatActivity {
         college = uni.getText().toString();
         major = field.getText().toString();
         country = location.getText().toString();
+
+        shared.edit().putString("gender", gender).commit();
+        shared.edit().putString("date", gender).commit();
+        shared.edit().putString("college", gender).commit();
+        shared.edit().putString("major", gender).commit();
+        shared.edit().putString("country", gender).commit();
+        shared.edit().putString("status", gender).commit();
+        shared.edit().putString("flag", "true").commit();
 
         if (status.isEmpty()){
 
