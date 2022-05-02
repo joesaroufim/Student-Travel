@@ -27,10 +27,12 @@ import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Initializing variables
     EditText user,pass;
     TextView signup, user_error, pass_error, cred_error;
     public String message, post_url;
 
+    //Creating sharedPrefernce to store local values
     SharedPreferences shared;
 
     @Override
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
 
+        //Getting the EditText Views by their Ids
         user = (EditText) findViewById(R.id.username);
         pass = (EditText) findViewById(R.id.password);
         signup = (TextView) findViewById(R.id.signup);
@@ -47,27 +50,33 @@ public class MainActivity extends AppCompatActivity {
         pass_error = (TextView) findViewById(R.id.password_error);
         cred_error = (TextView) findViewById(R.id.credentials_error);
 
+        //Setting the error messages to Invisible
         user_error.setVisibility(View.GONE);
         pass_error.setVisibility(View.GONE);
         cred_error.setVisibility(View.GONE);
 
         message = "";
+        //API url
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/login.php";
 
 
     }
 
     public void login(View view){
+        // This method the username and password from the user, calls the API to check for the credentials and
+        // acts accordingly
+
+        //Storing the values of the EditTexts in String variables
         String username = user.getText().toString();
         String password = pass.getText().toString();
 
-        if(username.isEmpty()){
+        if(username.isEmpty()){ //checking whether a field is empty
             user_error.setVisibility(View.VISIBLE);
             return;
         }else if(password.isEmpty()){
             pass_error.setVisibility(View.VISIBLE);
             return;
-        }else{
+        }else{ //Call the PostRequest class to connect to the database
             PostRequest post = new PostRequest();
             post.execute(username, password, post_url);
         }
@@ -113,18 +122,18 @@ public class MainActivity extends AppCompatActivity {
                 InputStream is = urlConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
-                while((line = bufferedReader.readLine()) != null){
+                while((line = bufferedReader.readLine()) != null){ //Reading the returned result from the api
                     message = line;
                  }
 
-                String[] msg = message.split(" ");
+                String[] msg = message.split(" "); //Splitting the resulted string to obtain the id and boolean answer
                 String state = msg[0];
                 Log.i("msg", state);
 
                 if (state.equals("true")){
-
+                    // Store the user id in the shared preference to be used in other pages
                     shared.edit().putInt("id", Integer.parseInt(msg[1])).commit();
-                    Intent home = new Intent(getApplicationContext(), Home.class);
+                    Intent home = new Intent(getApplicationContext(), Home.class); //Move to the Home page
                     startActivity(home);
                 }else{
                     pass.setText("");
