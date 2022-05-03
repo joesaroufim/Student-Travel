@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
 
+    // Initializing Instance Variables
     TextView col1, col2,col3;
     TableLayout table;
     public String[] full_name, username, status;
@@ -39,15 +40,21 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // Creating SharedPreferences Object to retrieve the stored id.
         SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
         id = shared.getInt("id", -1);
 
+        // Initializing the TableLayout View
         table = (TableLayout) findViewById(R.id.table);
+
+        // Storing the API and sending the id as parameter in the API
         String get_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/list_favorites.php?id="+id;
 
+        // Calling the GetRequest class to access the API
         GetRequest get = new GetRequest();
         get.execute(get_url);
 
+        // Set the number of Columns in the table
         table.setColumnStretchable(0,true);
         table.setColumnStretchable(1,true);
         table.setColumnStretchable(2,true);
@@ -55,11 +62,13 @@ public class Home extends AppCompatActivity {
     }
 
     public void profile (View view){
+        // Move to the Profile page
         Intent profile = new Intent(getApplicationContext(), Profile.class);
         startActivity(profile);
     }
 
     public void filter(View view){
+        // Move to the Filter page
         Intent filter = new Intent(getApplicationContext(), Filter.class);
         startActivity(filter);
     }
@@ -113,18 +122,21 @@ public class Home extends AppCompatActivity {
                         list.add(json_array.get(i));
                     }
                 }
+
+                // Initializing String arrays to store the column values
                 full_name = new String[json_array.length()];
                 username = new String[json_array.length()];
                 status = new String[json_array.length()];
 
+                // Reading each row and storing the value in the corresponding array
                 for(int i = 0; i < list.size(); i++){
                     obj = (JSONObject) json_array.get(i);
                     full_name[i] = obj.getString("name");
                     username[i] = obj.getString("username");
                     status[i] = obj.getString("status");
                 }
-                Log.i("nameee", full_name[0]);
 
+                // Filling up the rows in the table
                 for (int i = 0; i<full_name.length; i++){
                     final TableRow new_row = new TableRow(getApplicationContext());
                     col1 = new TextView(getApplicationContext());
@@ -145,15 +157,15 @@ public class Home extends AppCompatActivity {
                     new_row.addView(col1);
                     new_row.addView(col2);
                     new_row.addView(col3);
-                    new_row.setId(i);
-                    new_row.setBackgroundColor(Color.parseColor("#138B9A"));
-                    send_username = username[i];
+                    new_row.setId(i); // setting an id for each row
+                    new_row.setBackgroundColor(Color.parseColor("#8FCDD5"));
+                    send_username = username[i]; // storing the username of each profile
                     new_row.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            send_username = username[new_row.getId()];
+                            send_username = username[new_row.getId()]; // getting the username of the clicked person
                             Intent person = new Intent(getApplicationContext(), person.class);
-                            person.putExtra("username", send_username);
+                            person.putExtra("username", send_username); // sending the username to the Person page
                             startActivity(person);
                         }
                     });
