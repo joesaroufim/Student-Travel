@@ -27,6 +27,7 @@ import java.net.URLEncoder;
 
 public class Signup extends AppCompatActivity {
 
+    // Declaring variables
     TextView req1,req2,req3,req4,req5,login;
     EditText user,number,name,pass,confirmed_pass;
     public String message;
@@ -37,18 +38,21 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        // Initializing EditText Views
         user = (EditText) findViewById(R.id.new_user);
         number = (EditText) findViewById(R.id.phone);
         name = (EditText) findViewById(R.id.name);
         pass = (EditText) findViewById(R.id.new_password);
         confirmed_pass = (EditText) findViewById(R.id.confirmed_password);
 
+        // Initializing TextViews
         req1 = (TextView) findViewById(R.id.required1);
         req2 = (TextView) findViewById(R.id.required2);
         req3 = (TextView) findViewById(R.id.required3);
         req4 = (TextView) findViewById(R.id.required4);
         req5 = (TextView) findViewById(R.id.required5);
 
+        // Setting the Visibility for each TextView to GONE
         req1.setVisibility(View.GONE);
         req2.setVisibility(View.GONE);
         req3.setVisibility(View.GONE);
@@ -56,20 +60,26 @@ public class Signup extends AppCompatActivity {
         req5.setVisibility(View.GONE);
 
         message = "";
+
+        // Storing the url of the API
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/sign_up.php";
 
     }
 
     public void signup (View view){
+        // Storing the values of each EditText field into String variables
         String username = user.getText().toString();
         String full_name = name.getText().toString();
         String phone_number = number.getText().toString();
         String password = pass.getText().toString();
         String confirmed_password = confirmed_pass.getText().toString();
+
+        // Change the text of the error fields
         req5.setText("Field Required!");
         req1.setVisibility(View.GONE);
         req1.setText("Field required!");
 
+        // Checking whether any field is missed by the user
         if (username.isEmpty()){
             req1.setVisibility(View.VISIBLE);
             return;
@@ -85,7 +95,7 @@ public class Signup extends AppCompatActivity {
         }else if (confirmed_password.isEmpty()){
             req5.setVisibility(View.VISIBLE);
             return;
-        }else{
+        }else{ // Checking if the confirmed password is equal to the entered one
             if (!password.equals(confirmed_password)){
                 confirmed_pass.setText("");
                 req5.setText("Incompatible values");
@@ -94,7 +104,6 @@ public class Signup extends AppCompatActivity {
             }else{
                 PostRequest post = new PostRequest();// Initialize a PostRequest object everytime the user clicks the button.
                 post.execute(username, password, phone_number, full_name, post_url);
-
 
             }
 
@@ -138,13 +147,17 @@ public class Signup extends AppCompatActivity {
                 br.close();
                 out.close();
 
+                // Creating an Input Stream connection
                 InputStream is = urlConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
+
+                // Reading data from the API
                 while((line = bufferedReader.readLine()) != null){
                     message = line;
                 }
 
+                // Moving to the Login page if the registration goes right
                 if(message.equals("correct")) {
                     Intent login = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(login);

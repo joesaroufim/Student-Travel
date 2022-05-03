@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
 
-    // Initializing Instance Variables
+    // Declaring Instance fields
     TextView col1, col2,col3;
     TableLayout table;
     public String[] full_name, username, status;
