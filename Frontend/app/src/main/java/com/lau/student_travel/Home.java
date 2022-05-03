@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class Home extends AppCompatActivity {
 
     TextView col1, col2,col3;
     TableLayout table;
-    public String[] full_name, username;
+    public String[] full_name, username, status;
     public String send_username;
     int id;
 
@@ -114,11 +115,13 @@ public class Home extends AppCompatActivity {
                 }
                 full_name = new String[json_array.length()];
                 username = new String[json_array.length()];
+                status = new String[json_array.length()];
 
                 for(int i = 0; i < list.size(); i++){
                     obj = (JSONObject) json_array.get(i);
                     full_name[i] = obj.getString("name");
                     username[i] = obj.getString("username");
+                    status[i] = obj.getString("status");
                 }
                 Log.i("nameee", full_name[0]);
 
@@ -128,21 +131,22 @@ public class Home extends AppCompatActivity {
                     col2= new TextView(getApplicationContext());
                     col3 = new TextView(getApplicationContext());
                     col1.setText(full_name[i]);
-                    col1.setTextSize(20);
+                    col1.setTextSize(18);
                     col1.setGravity(Gravity.CENTER);
                     col1.setTypeface(null, Typeface.BOLD);
                     col2.setText(username[i]);
-                    col2.setTextSize(20);
+                    col2.setTextSize(18);
                     col2.setGravity(Gravity.CENTER);
                     col2.setTypeface(null, Typeface.BOLD);
-                    col3.setText("hello");
-                    col3.setTextSize(20);
+                    col3.setText(status[i]);
+                    col3.setTextSize(18);
                     col3.setGravity(Gravity.CENTER);
                     col3.setTypeface(null, Typeface.BOLD);
                     new_row.addView(col1);
                     new_row.addView(col2);
                     new_row.addView(col3);
                     new_row.setId(i);
+                    new_row.setBackgroundColor(Color.parseColor("#138B9A"));
                     send_username = username[i];
                     new_row.setOnClickListener(new View.OnClickListener() {
                         @Override

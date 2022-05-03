@@ -16,6 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -46,7 +49,6 @@ public class Profile extends AppCompatActivity {
 
         shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
         id = shared.getInt("id", -1);
-        String flag = shared.getString("flag", "");
 
         arriving_date = (EditText) findViewById(R.id.date);
         location = (EditText) findViewById(R.id.country);
@@ -58,13 +60,6 @@ public class Profile extends AppCompatActivity {
 
         spinner = (Spinner) findViewById(R.id.spinner);
 
-        if(flag.equals("true")){
-            arriving_date.setText(shared.getString("date", ""));
-            location.setText(shared.getString("country", ""));
-            uni.setText(shared.getString("college", ""));
-            field.setText(shared.getString("major", ""));
-            spinner.setSelection(0);
-        }
 
         //Creating arrayList for the Spinner
         ArrayList<String> gender_list = new ArrayList<String>();
@@ -99,13 +94,6 @@ public class Profile extends AppCompatActivity {
         major = field.getText().toString();
         country = location.getText().toString();
 
-        shared.edit().putString("gender", gender).commit();
-        shared.edit().putString("date", gender).commit();
-        shared.edit().putString("college", gender).commit();
-        shared.edit().putString("major", gender).commit();
-        shared.edit().putString("country", gender).commit();
-        shared.edit().putString("status", gender).commit();
-        shared.edit().putString("flag", "true").commit();
 
         if (status.isEmpty()){
 
@@ -215,6 +203,7 @@ public class Profile extends AppCompatActivity {
             super.onProgressUpdate(values);
         }
     }
+
 
 
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -173,21 +174,22 @@ public class List extends AppCompatActivity {
                     col2= new TextView(getApplicationContext());
                     col3 = new TextView(getApplicationContext());
                     col1.setText(name[i]);
-                    col1.setTextSize(20);
+                    col1.setTextSize(18);
                     col1.setGravity(Gravity.CENTER);
                     col1.setTypeface(null, Typeface.BOLD);
-                    col2.setText(username[i]);
-                    col2.setTextSize(20);
+                    col2.setText(major);
+                    col2.setTextSize(18);
                     col2.setGravity(Gravity.CENTER);
                     col2.setTypeface(null, Typeface.BOLD);
                     col3.setText(college);
-                    col3.setTextSize(20);
+                    col3.setTextSize(18);
                     col3.setGravity(Gravity.CENTER);
                     col3.setTypeface(null, Typeface.BOLD);
                     new_row.addView(col1);
                     new_row.addView(col2);
                     new_row.addView(col3);
                     new_row.setId(i);
+                    new_row.setBackgroundColor(Color.parseColor("#138B9A"));
                     send_username = username[i];
                     new_row.setOnClickListener(new View.OnClickListener() {
                         @Override
