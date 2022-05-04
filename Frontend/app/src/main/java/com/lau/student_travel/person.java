@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 public class person extends AppCompatActivity {
 
+    // Declaring variables
     TextView arriving_date, location, sex, uni, field, can_help, user_name, favorite, full_name, number;
     CardView card1, card2, card3;
     String username, post_url, fav_url, message, phone_nb;
@@ -42,14 +43,15 @@ public class person extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
 
+        // Creating SharedPreferences object to access stored data
         SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
         id = shared.getInt("id", -1);
 
+        // Getting the username from the previous page using Intent
         Intent message = getIntent();
         username = message.getStringExtra("username");
 
-        Log.i("Person username", username);
-
+        // Initializing TextViews
         arriving_date= (TextView) findViewById(R.id.date);
         location = (TextView) findViewById(R.id.country);
         uni = (TextView) findViewById(R.id.uni);
@@ -60,36 +62,49 @@ public class person extends AppCompatActivity {
         user_name = (TextView) findViewById(R.id.username1);
         favorite = (TextView) findViewById(R.id.favorite);
         number = (TextView) findViewById(R.id.phone1);
+
+        // Initializing CardViews
         card1 = (CardView) findViewById(R.id.c1);
         card2 = (CardView) findViewById(R.id.c2);
         card3 = (CardView) findViewById(R.id.c3);
 
+        // Storing the url of the first API
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/person.php";
-        PostRequest post = new PostRequest();
-        post.execute(username,post_url);
 
+        // Creating a PostRequest Object to access the API
+        PostRequest post = new PostRequest();
+        post.execute(username,post_url); // calling the functions in the PostRequest class
+
+        // Storing the url of the second API
         fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
     }
 
     public void home(View view){
+        // Moving to the Home page if the icon is clicked
         Intent home = new Intent (getApplicationContext(), Home.class);
         startActivity(home);
     }
 
     public void filter(View view){
+        // Moving to the Filter page if the icon is clicked
         Intent filter = new Intent (getApplicationContext(), Filter.class);
         startActivity(filter);
     }
 
     public void getNumber (View view){
+        // Showing the phone number of the person when the phone icon is clicked
         number.setText(phone_nb);
+
+        // Changing the opacity of the other views
         card1.setAlpha(.2f);
         card2.setAlpha(0.2f);
+
         number.setVisibility(View.VISIBLE);
     }
 
     public void addFavorite(View view){
-        view.setBackgroundColor(Color.parseColor("#138B9A"));
+        // calling the API to add the person to te user's favorites
+        view.setBackgroundColor(Color.parseColor("#138B9A")); // changing the background color of the button
         Favorite fav = new Favorite();
         fav.execute(""+id, username, fav_url);
     }
@@ -130,9 +145,11 @@ public class person extends AppCompatActivity {
                 br.close();
                 out.close();
 
+                // Creating an Input Stream connection
                 InputStream is = urlConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
+                // reading data and storing them into a String
                 while((line = bufferedReader.readLine()) != null){
                     message = line;
                 }
@@ -204,6 +221,7 @@ public class person extends AppCompatActivity {
                 InputStream is = urlConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
+                // Reading data and storing them in a String
                 while((line = bufferedReader.readLine()) != null){
                     message += line;
                 }
