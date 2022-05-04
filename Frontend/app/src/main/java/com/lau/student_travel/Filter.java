@@ -13,7 +13,7 @@ public class Filter extends AppCompatActivity {
 
     // Declaring variables
     EditText uni, location, field;
-    TextView need_help, can_help;
+    TextView need_help, can_help, error_msg;
     String college, country, status, major;
 
     @Override
@@ -29,6 +29,7 @@ public class Filter extends AppCompatActivity {
         // Initializing TextViews
         need_help = (TextView) findViewById(R.id.need_help1);
         can_help = (TextView) findViewById(R.id.can_help1);
+        error_msg = (TextView) findViewById(R.id.error);
 
     }
 
@@ -54,7 +55,7 @@ public class Filter extends AppCompatActivity {
 
         // Checking if every field is filled
         if (status.isEmpty() || country.isEmpty() || major.isEmpty()){
-            // write hereee
+            error_msg.setVisibility(View.VISIBLE);
         }else{ // Moving to the List page to list the available users by sending them their characteristics using Intent
             Intent list = new Intent(getApplicationContext(), List.class);
             list.putExtra("college", college);
