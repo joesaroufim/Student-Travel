@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 public class List extends AppCompatActivity {
 
+    // Declaring Variables
     TextView col1, col2,col3;
     TableLayout table;
     String college, country, major, status, post_url, send_username;
@@ -46,37 +47,48 @@ public class List extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        // Creating SharedPreferences Object to retrieve stored data
         SharedPreferences shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
         id = shared.getInt("id", -1);
 
+        // Initializing TableLayout
         table = (TableLayout) findViewById(R.id.table);
+
+        // Setting the Number of Columns
         table.setColumnStretchable(0,true);
         table.setColumnStretchable(1,true);
         table.setColumnStretchable(2,true);
 
+        // Storing the values sent from the Filter page using Intent Object
         Intent message = getIntent();
         college= message.getStringExtra("college");
         country= message.getStringExtra("country");
         major= message.getStringExtra("major");
         status= message.getStringExtra("status");
 
+        // Storing the API url
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/list.php";
+
+        // Creating a PostRequest Object to connect with the database
         PostRequest post = new PostRequest();
         post.execute(college, country, major, status, post_url);
 
     }
 
     public void home(View view){
+        // Moving to the Home page
         Intent home = new Intent (getApplicationContext(), Home.class);
         startActivity(home);
     }
 
     public void filter(View view){
+        // Moving to the Filter page
         Intent filter = new Intent (getApplicationContext(), Filter.class);
         startActivity(filter);
     }
 
     public void profile(View view){
+        // Moving to the Profile page
         Intent profile = new Intent (getApplicationContext(), Profile.class);
         startActivity(profile);
     }
@@ -125,6 +137,7 @@ public class List extends AppCompatActivity {
                 InputStream is = urlConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
+                // Reading data from the database and storing them in a String Object
                 while((line = bufferedReader.readLine()) != null){
                     message += line;
                 }
@@ -159,15 +172,18 @@ public class List extends AppCompatActivity {
                         list.add(json_array.get(i));
                     }
                 }
+                // Creating String arrays to store column values
                 username = new String[json_array.length()];
                 name = new String[json_array.length()];
 
+                // Reading the values row by row and storing them in the corresponding String array
                 for(int i = 0; i < list.size(); i++){
                     obj = (JSONObject) json_array.get(i);
                     username[i] = obj.getString("username");
                     name[i] = obj.getString("name");
                 }
 
+                // Creating new row for each table entry with specified text characteristics
                 for (int i = 0; i<name.length; i++){
                     final TableRow new_row = new TableRow(getApplicationContext());
                     col1 = new TextView(getApplicationContext());
@@ -185,16 +201,19 @@ public class List extends AppCompatActivity {
                     col3.setTextSize(18);
                     col3.setGravity(Gravity.CENTER);
                     col3.setTypeface(null, Typeface.BOLD);
+                    // Adding eah column to the row
                     new_row.addView(col1);
                     new_row.addView(col2);
                     new_row.addView(col3);
-                    new_row.setId(i);
+                    new_row.setId(i); // setting an id for each row
                     new_row.setBackgroundColor(Color.parseColor("#138B9A"));
                     send_username = username[i];
                     new_row.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            // getting the username for the person corresponding to the clicked row
                             send_username = username[new_row.getId()];
+                            // Moving to the Person page and sending the username of the person
                             Intent person = new Intent(getApplicationContext(), person.class);
                             person.putExtra("username", send_username);
                             startActivity(person);
