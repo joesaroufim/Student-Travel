@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 public class Profile extends AppCompatActivity {
 
+    // Declaring Variables
     EditText arriving_date, location, uni, field;
     TextView can_help, need_help;
     Spinner spinner;
@@ -47,19 +48,22 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Creating SharedPreferences Object to retrieve stored data
         shared = this.getSharedPreferences("com.lau.student_travel", Context.MODE_PRIVATE);
         id = shared.getInt("id", -1);
 
+        // Initializing EditText Views
         arriving_date = (EditText) findViewById(R.id.date);
         location = (EditText) findViewById(R.id.country);
         uni = (EditText) findViewById(R.id.uni);
         field = (EditText) findViewById(R.id.major);
 
+        // Initializing TextViews
         can_help = (TextView) findViewById(R.id.favorite);
         need_help = (TextView) findViewById(R.id.need_help);
 
+        // Initializing the Spinner
         spinner = (Spinner) findViewById(R.id.spinner);
-
 
         //Creating arrayList for the Spinner
         ArrayList<String> gender_list = new ArrayList<String>();
@@ -70,30 +74,31 @@ public class Profile extends AppCompatActivity {
         ArrayAdapter<String> my_adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, gender_list);
         spinner.setAdapter(my_adapter);
 
+        // Storing the API url
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/profile.php";
-
     }
 
-
     public void canHelp(View view){
+        // Setting the status of the user as "can help"
         status = "can help";
         view.setBackgroundColor(Color.parseColor("#138B9A"));
         need_help.setBackgroundColor(Color.parseColor("#F2F6F6"));
     }
 
     public void needHelp(View view){
+        // Setting the status of the user as "need help"
         status = "need help";
         view.setBackgroundColor(Color.parseColor("#138B9A"));
         can_help.setBackgroundColor(Color.parseColor("#F2F6F6"));
     }
 
     public void update(View view){
+        // Storing the entered values in the required variables and sending them to the API to update the database
         gender = spinner.getSelectedItem().toString();
         date = arriving_date.getText().toString();
         college = uni.getText().toString();
         major = field.getText().toString();
         country = location.getText().toString();
-
 
         if (status.isEmpty()){
 
@@ -105,16 +110,19 @@ public class Profile extends AppCompatActivity {
     }
 
     public void home(View view){
+        // Moving to the Home page
         Intent home = new Intent(getApplicationContext(), Home.class);
         startActivity(home);
     }
 
     public void filter(View view){
+        // Moving to the Filter page
         Intent filter = new Intent (getApplicationContext(), Filter.class);
         startActivity(filter);
     }
 
     public void signout (View view){
+        // Moving to the login page
         Intent signout = new Intent (getApplicationContext(), MainActivity.class);
         startActivity(signout);
     }
@@ -138,7 +146,6 @@ public class Profile extends AppCompatActivity {
             message = "";
 
             try {
-                Log.i("gender", gender);
                 // Creating a new URL connection with PHP.
                 URL url = new URL(str_url);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -167,11 +174,10 @@ public class Profile extends AppCompatActivity {
                 InputStream is = urlConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String line = "";
+                // Reading values fromm the database and storing them into a String
                 while((line = bufferedReader.readLine()) != null){
                     message += line;
                 }
-
-                Log.i("update", message);
 
                 bufferedReader.close();
                 is.close();
