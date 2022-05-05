@@ -67,7 +67,7 @@ public class List extends AppCompatActivity {
         status= message.getStringExtra("status");
 
         // Storing the API url
-        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/list.php";
+        post_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/list.php";
 
         // Creating a PostRequest Object to connect with the database
         PostRequest post = new PostRequest();

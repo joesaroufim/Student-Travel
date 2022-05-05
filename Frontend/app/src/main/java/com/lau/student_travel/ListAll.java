@@ -52,7 +52,7 @@ public class ListAll extends AppCompatActivity {
         table.setColumnStretchable(2,true);
 
         // Storing the API url
-        get_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/list_all.php";
+        get_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/list_all.php";
 
         // Creating a PostRequest Object to connect with the database
         GetRequest get = new GetRequest();

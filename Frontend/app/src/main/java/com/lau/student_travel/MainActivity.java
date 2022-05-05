@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         message = "";
         //API url
-        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/login.php";
+        post_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/login.php";
 
 
     }

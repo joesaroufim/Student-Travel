@@ -62,7 +62,7 @@ public class Signup extends AppCompatActivity {
         message = "";
 
         // Storing the url of the API
-        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/sign_up.php";
+        post_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/sign_up.php";
 
     }
 

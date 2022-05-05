@@ -48,7 +48,7 @@ public class Home extends AppCompatActivity {
         table = (TableLayout) findViewById(R.id.table);
 
         // Storing the API and sending the id as parameter in the API
-        String get_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/list_favorites.php?id="+id;
+        String get_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/list_favorites.php?id="+id;
 
         // Calling the GetRequest class to access the API
         GetRequest get = new GetRequest();

@@ -81,9 +81,9 @@ public class Profile extends AppCompatActivity {
         spinner.setAdapter(my_adapter);
 
         // Storing the API url
-        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/profile.php";
+        post_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/profile.php";
 
-        name_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/name.php?id="+id;
+        name_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/name.php?id="+id;
         GetName get_name = new GetName();
         get_name.execute(name_url);
 

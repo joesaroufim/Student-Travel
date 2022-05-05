@@ -69,14 +69,14 @@ public class person extends AppCompatActivity {
         card3 = (CardView) findViewById(R.id.c3);
 
         // Storing the url of the first API
-        post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/person.php";
+        post_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/person.php";
 
         // Creating a PostRequest Object to access the API
         PostRequest post = new PostRequest();
         post.execute(username,post_url); // calling the functions in the PostRequest class
 
         // Storing the url of the second API
-        fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php?id="+id;
+        fav_url = "http://192.168.43.127/Mobile%20Computing/Final%20Project/Backend/add_favorites.php?id="+id;
     }
 
     public void home(View view){
