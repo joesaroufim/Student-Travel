@@ -65,4 +65,22 @@ public class Filter extends AppCompatActivity {
             startActivity(list);
         }
     }
+
+    public void home(View view){
+        // Moving to the Home page if the icon is clicked
+        Intent home = new Intent (getApplicationContext(), Home.class);
+        startActivity(home);
+    }
+
+    public void profile(View view){
+        // Moving to the Filter page if the icon is clicked
+        Intent profile = new Intent (getApplicationContext(), Profile.class);
+        startActivity(profile);
+    }
+
+    public void list(View view){
+        // Move to the List page
+        Intent list = new Intent(getApplicationContext(), ListAll.class);
+        startActivity(list);
+    }
 }

@@ -72,9 +72,11 @@ public class MainActivity extends AppCompatActivity {
         String password = pass.getText().toString();
 
         if(username.isEmpty()){ //checking whether a field is empty
+            pass_error.setVisibility(View.GONE);
             user_error.setVisibility(View.VISIBLE);
             return;
         }else if(password.isEmpty()){
+            user_error.setVisibility(View.GONE);
             pass_error.setVisibility(View.VISIBLE);
             return;
         }else{ //Call the PostRequest class to connect to the database
