@@ -73,6 +73,12 @@ public class Home extends AppCompatActivity {
         startActivity(filter);
     }
 
+    public void list(View view){
+        // Move to the Filter page
+        Intent list = new Intent(getApplicationContext(), ListAll.class);
+        startActivity(list);
+    }
+
 
 
     public class GetRequest extends AsyncTask<String, Void, String> {

@@ -2,8 +2,7 @@
 
 include ("db_info.php");
 
-
-$query = $mysqli->prepare("SELECT * FROM users NATURAL JOIN voyages");
+$query = $mysqli->prepare("SELECT name, username, status, university FROM users NATURAL JOIN voyages");
 $query->execute();
 
 $array = $query->get_result();
