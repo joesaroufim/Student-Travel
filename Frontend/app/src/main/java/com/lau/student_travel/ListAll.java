@@ -60,6 +60,25 @@ public class ListAll extends AppCompatActivity {
 
     }
 
+    public void home(View view){
+        // Moving to the Home page
+        Intent home = new Intent (getApplicationContext(), Home.class);
+        startActivity(home);
+    }
+
+    public void filter(View view){
+        // Moving to the Filter page
+        Intent filter = new Intent (getApplicationContext(), Filter.class);
+        startActivity(filter);
+    }
+
+    public void profile(View view){
+        // Moving to the Profile page
+        Intent profile = new Intent (getApplicationContext(), Profile.class);
+        startActivity(profile);
+    }
+
+
     public class GetRequest extends AsyncTask<String, Void, String> {
         // This class contains methods that enable url connection to an API to retrieve data stored in it.
 

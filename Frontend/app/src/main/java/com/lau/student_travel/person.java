@@ -91,6 +91,8 @@ public class person extends AppCompatActivity {
         startActivity(filter);
     }
 
+
+
     public void getNumber (View view){
         // Showing the phone number of the person when the phone icon is clicked
         number.setText(phone_nb);
