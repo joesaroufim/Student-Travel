@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,11 +39,12 @@ public class Profile extends AppCompatActivity {
 
     // Declaring Variables
     EditText arriving_date, location, uni, field;
-    TextView can_help, need_help;
+    TextView can_help, need_help, name, username_1;
     Spinner spinner;
-    String gender, date, college, major, status, country, post_url;
+    String gender, date, college, major, status, country, post_url, name_url;
     String message;
     SharedPreferences shared;
+    String[] full_name, username;
     int id;
 
     @Override
@@ -61,6 +65,8 @@ public class Profile extends AppCompatActivity {
         // Initializing TextViews
         can_help = (TextView) findViewById(R.id.favorite);
         need_help = (TextView) findViewById(R.id.need_help);
+        username_1 = (TextView) findViewById(R.id.username1);
+        name = (TextView) findViewById(R.id.full_name);
 
         // Initializing the Spinner
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -76,6 +82,11 @@ public class Profile extends AppCompatActivity {
 
         // Storing the API url
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/profile.php";
+
+        name_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/name.php";
+        GetName get_name = new GetName();
+        get_name.execute(""+id, name_url);
+
     }
 
     public void canHelp(View view){
@@ -202,6 +213,110 @@ public class Profile extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
+
+    public class GetName extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            //The method take String parameters and send data to the received url.
+
+            //Storing data in String objects
+            String id = params[0];
+            String str_url = params[1];
+            message = "";
+
+            try {
+                // Creating a new URL connection with PHP.
+                URL url = new URL(str_url);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+
+                OutputStream out = urlConnection.getOutputStream(); //Initializing OutputStream Object.
+
+                BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
+
+                // Setting the variables to be sent to the URL
+                String post_data = URLEncoder.encode("id", "UTF-8")+"="+URLEncoder.encode(id, "UTF-8");
+
+                br.write(post_data); //Writing and sending data.
+                br.flush();
+                br.close();
+                out.close();
+
+                InputStream is = urlConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
+                String line = "";
+                // Reading values fromm the database and storing them into a String
+                while((line = bufferedReader.readLine()) != null){
+                    message += line;
+                }
+
+                bufferedReader.close();
+                is.close();
+                urlConnection.disconnect();
+
+                //Catching exceptions
+            } catch (MalformedURLException e) {
+                Log.i("MalF",e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.i("Ioexp",e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try{
+
+                Log.i("String", "im here");
+                JSONArray json_array  = new JSONArray(s); //Creating a JSON object.
+
+                ArrayList<Object> list = new ArrayList<>();
+                JSONObject obj;
+
+                // If the array is empty or not
+                if(json_array != null){
+                    for(int i = 0; i < json_array.length(); i++){
+                        list.add(json_array.get(i));
+                    }
+                }
+
+                // Initializing String arrays to store the column values
+                full_name = new String[json_array.length()];
+                username = new String[json_array.length()];
+
+                // Reading each row and storing the value in the corresponding array
+                for(int i = 0; i < list.size(); i++){
+                    obj = (JSONObject) json_array.get(i);
+                    full_name[i] = obj.getString("name");
+                    username[i] = obj.getString("username");
+                }
+
+                username_1.setText(username[0]);
+                name.setText(full_name[0]);
+
+            }catch(Exception e){
+                Log.i("exeOnPost",e.getMessage());
+            }
+
         }
 
         @Override
