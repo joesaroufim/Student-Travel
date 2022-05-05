@@ -91,6 +91,11 @@ public class person extends AppCompatActivity {
         startActivity(filter);
     }
 
+    public void list(View view){
+        // Move to the List page
+        Intent list = new Intent(getApplicationContext(), ListAll.class);
+        startActivity(list);
+    }
 
 
     public void getNumber (View view){

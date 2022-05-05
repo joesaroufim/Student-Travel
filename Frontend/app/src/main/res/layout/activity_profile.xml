@@ -266,6 +266,7 @@
         android:id="@+id/imageView21"
         android:layout_width="44dp"
         android:layout_height="35dp"
+        android:onClick="list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.64"

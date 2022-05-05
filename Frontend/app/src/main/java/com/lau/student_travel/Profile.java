@@ -127,6 +127,11 @@ public class Profile extends AppCompatActivity {
         startActivity(signout);
     }
 
+    public void list(View view){
+        // Move to the Filter page
+        Intent list = new Intent(getApplicationContext(), ListAll.class);
+        startActivity(list);
+    }
 
     public class PostRequest extends AsyncTask<String, Void, String> {
 
