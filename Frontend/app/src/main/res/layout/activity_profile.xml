@@ -51,17 +51,17 @@
                 android:layout_height="match_parent">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="239dp"
+                    android:layout_width="240dp"
                     android:layout_height="63dp"
-                    android:layout_marginLeft="160dp"
+                    android:layout_marginLeft="140dp"
                     android:layout_marginTop="160dp">
 
                     <TextView
                         android:id="@+id/username1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="30dp"
                         android:text="username"
                         android:textAlignment="center" />
 

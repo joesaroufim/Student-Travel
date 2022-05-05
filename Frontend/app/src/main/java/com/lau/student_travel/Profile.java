@@ -83,9 +83,9 @@ public class Profile extends AppCompatActivity {
         // Storing the API url
         post_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/profile.php";
 
-        name_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/name.php";
+        name_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/name.php?id="+id;
         GetName get_name = new GetName();
-        get_name.execute(""+id, name_url);
+        get_name.execute(name_url);
 
     }
 
@@ -231,54 +231,30 @@ public class Profile extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            //The method take String parameters and send data to the received url.
+            //The method takes String parameter and gets a required data from an external URL API.
+            URL url;
+            HttpURLConnection http; //Initializing the url connection object
+            String results = "";
+            try{
+                url = new URL(params[0]);
+                http = (HttpURLConnection) url.openConnection(); //Declaring the Url connection object
 
-            //Storing data in String objects
-            String id = params[0];
-            String str_url = params[1];
-            message = "";
+                InputStream inputStream = http.getInputStream(); //initializing InputStream Object to pass data.
 
-            try {
-                // Creating a new URL connection with PHP.
-                URL url = new URL(str_url);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setDoInput(true);
-                urlConnection.setDoOutput(true);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)); //Initializing BufferedReader Object to Read data.
+                String line = reader.readLine(); //Get the data ad store it in a String.
 
-                OutputStream out = urlConnection.getOutputStream(); //Initializing OutputStream Object.
-
-                BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
-
-                // Setting the variables to be sent to the URL
-                String post_data = URLEncoder.encode("id", "UTF-8")+"="+URLEncoder.encode(id, "UTF-8");
-
-                br.write(post_data); //Writing and sending data.
-                br.flush();
-                br.close();
-                out.close();
-
-                InputStream is = urlConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
-                String line = "";
-                // Reading values fromm the database and storing them into a String
-                while((line = bufferedReader.readLine()) != null){
-                    message += line;
+                while( line  != null){
+                    results += line;
+                    line = reader.readLine(); //Concatenate each line
                 }
 
-                bufferedReader.close();
-                is.close();
-                urlConnection.disconnect();
-
-                //Catching exceptions
-            } catch (MalformedURLException e) {
-                Log.i("MalF",e.getMessage());
-                e.printStackTrace();
-            } catch (IOException e) {
-                Log.i("Ioexp",e.getMessage());
-                e.printStackTrace();
+            }catch(Exception e){
+                Log.i("exeDOin",e.getMessage());
+                return null;
             }
-            return null;
+            Log.i("entered:", results);
+            return results;
         }
 
         @Override
