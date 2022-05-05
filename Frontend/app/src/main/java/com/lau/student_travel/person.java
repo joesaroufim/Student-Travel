@@ -96,8 +96,12 @@ public class person extends AppCompatActivity {
         Intent list = new Intent(getApplicationContext(), ListAll.class);
         startActivity(list);
     }
-
-
+    public void signout (View view){
+        // Moving to the login page
+        Intent signout = new Intent (getApplicationContext(), MainActivity.class);
+        startActivity(signout);
+    }
+    
     public void getNumber (View view){
         // Showing the phone number of the person when the phone icon is clicked
         number.setText(phone_nb);
