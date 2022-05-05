@@ -13,6 +13,9 @@
         android:theme="@style/Theme.StudentTravel"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ListAll"
+            android:exported="false" />
+        <activity
             android:name=".Filter"
             android:exported="false" />
         <activity
