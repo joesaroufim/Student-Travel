@@ -76,7 +76,7 @@ public class person extends AppCompatActivity {
         post.execute(username,post_url); // calling the functions in the PostRequest class
 
         // Storing the url of the second API
-        fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php";
+        fav_url = "http://192.168.1.101/Mobile%20Computing/Final%20Project/Backend/add_favorites.php?id="+id;
     }
 
     public void home(View view){
@@ -122,7 +122,7 @@ public class person extends AppCompatActivity {
         // calling the API to add the person to te user's favorites
         view.setBackgroundColor(Color.parseColor("#138B9A")); // changing the background color of the button
         Favorite fav = new Favorite();
-        fav.execute(""+id, username, fav_url);
+        fav.execute(username, fav_url);
     }
 
 
@@ -152,8 +152,7 @@ public class person extends AppCompatActivity {
                 BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8")); //Initializing BufferedWriter Object
 
                 // Setting the variables to be sent to the URL
-                String post_data = URLEncoder.encode("username", "UTF-8")+"="+URLEncoder.encode(username, "UTF-8")+"&"
-                        +URLEncoder.encode("id", "UTF-8")+"="+URLEncoder.encode(""+id, "UTF-8");
+                String post_data = URLEncoder.encode("username", "UTF-8")+"="+URLEncoder.encode(username, "UTF-8");
 
 
                 br.write(post_data); //Writing and sending data.

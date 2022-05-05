@@ -2,9 +2,7 @@
 
 include ("db_info.php");
 
-session_start();
-
-$user_id = $_POST['id'];
+$user_id = $_GET['id'];
 $username = $_POST['username'];
 
 $sql = $mysqli->prepare("SELECT user_id FROM users WHERE  username = ?");
