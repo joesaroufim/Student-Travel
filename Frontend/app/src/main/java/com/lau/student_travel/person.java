@@ -101,7 +101,12 @@ public class person extends AppCompatActivity {
         Intent signout = new Intent (getApplicationContext(), MainActivity.class);
         startActivity(signout);
     }
-    
+    public void profile(View view){
+        // Moving to the Profile page
+        Intent profile = new Intent (getApplicationContext(), Profile.class);
+        startActivity(profile);
+    }
+
     public void getNumber (View view){
         // Showing the phone number of the person when the phone icon is clicked
         number.setText(phone_nb);
