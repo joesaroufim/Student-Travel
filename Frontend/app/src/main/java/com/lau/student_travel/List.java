@@ -189,19 +189,19 @@ public class List extends AppCompatActivity {
                     col1 = new TextView(getApplicationContext());
                     col2= new TextView(getApplicationContext());
                     col3 = new TextView(getApplicationContext());
-                    col1.setText(name[i]);
+                    col1.setText(username[i]);
                     col1.setTextSize(18);
                     col1.setGravity(Gravity.CENTER);
                     col1.setTypeface(null, Typeface.BOLD);
-                    col2.setText(major);
+                    col2.setText(college);
                     col2.setTextSize(18);
                     col2.setGravity(Gravity.CENTER);
                     col2.setTypeface(null, Typeface.BOLD);
-                    col3.setText(college);
+                    col3.setText(status);
                     col3.setTextSize(18);
                     col3.setGravity(Gravity.CENTER);
                     col3.setTypeface(null, Typeface.BOLD);
-                    // Adding eah column to the row
+                    // Adding each column to the row
                     new_row.addView(col1);
                     new_row.addView(col2);
                     new_row.addView(col3);
